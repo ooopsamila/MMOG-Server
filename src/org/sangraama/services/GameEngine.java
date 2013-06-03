@@ -67,18 +67,27 @@ public class GameEngine implements Runnable {
 
 	private void updateClients() {
 		List<OutgoingMessage> outgoingMessages = new ArrayList<>();
+		String id = null;
 		for (Player player : DataStore.playerMap.values()) {
 			Body body = player.getBody();
 			OutgoingMessage outgoingMessage = new OutgoingMessage();
 			outgoingMessage.setX(body.getPosition().x);
 			outgoingMessage.setY(body.getPosition().y);
 			outgoingMessage.setAngle(body.getAngle());
+			if (outgoingMessage.getX() == 100) {
+				outgoingMessage.setType("CHANGE");
+				world.destroyBody(body);
+				id = player.getId();
+			} else {
+				outgoingMessage.setType("UPDATE");
+			}
 			outgoingMessages.add(outgoingMessage);
 		}
 		for (Player player : DataStore.playerMap.values()) {
 			player.getWebSocket().send(JsonUtil.listToJson(outgoingMessages));
 		}
-
+		if (id != null) {
+			DataStore.playerMap.remove(id);
+		}
 	}
-
 }
