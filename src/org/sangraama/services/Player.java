@@ -20,9 +20,9 @@ public class Player {
 		this.webSocket = webSocket;
 	}
 
-	public Player(String id) {
+	public Player(String id, float x, float y, float angle) {
 		this.id = id;
-		this.bodyDef = this.createBodyDef();
+		this.bodyDef = this.createBodyDef(x, y, angle);
 	}
 
 	public String getId() {
@@ -57,9 +57,10 @@ public class Player {
 		this.incomingMessage = incomingMessage;
 	}
 
-	public BodyDef createBodyDef() {
+	public BodyDef createBodyDef(float x, float y, float angle) {
 		BodyDef bd = new BodyDef();
-		bd.position.set(50, 50);
+		bd.position.set(x, y);
+		bd.angle = angle;
 		bd.type = BodyType.DYNAMIC;
 		return bd;
 	}

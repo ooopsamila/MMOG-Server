@@ -14,6 +14,10 @@ public class JsonUtil {
 	public static IncomingMessage jsonToObject(String str) {
 		return gson.fromJson(str, IncomingMessage.class);
 	}
+	
+	public static String inComingToString(IncomingMessage incomingMessage) {
+		return gson.toJson(incomingMessage);
+	}
 
 	public static String listToJson(List<OutgoingMessage> outgoingMessages) {
 		return gson.toJson(outgoingMessages);
